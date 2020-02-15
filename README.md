@@ -45,3 +45,7 @@ docker-compose up -d --build
 ```
 gunzip < [backupfile.sql.gz] | mysql -u [uname] -p[pass] [dbname]
 ```
+
+~~---------------------------------~~
+
+I will add gitlab-ci and k8s for this project...
