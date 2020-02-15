@@ -1,0 +1,108 @@
+version: '3.1'
+services:
+   nginx:
+      container_name: nginx
+      build: ./build/nginx 
+      ports:
+         - 8080:8080
+      links:
+         - php
+      volumes:
+         - ./build/nginx/nginxdata:/etc/nginx/
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.10
+
+
+   varnish:
+      container_name: nginx
+      build: ./build/varnish
+      ports:
+         - 80:80
+      restart: always
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.11
+
+
+   php:
+      container_name: nginx
+      build: ./build/php
+      ports:
+         - 9000:9000
+      restart: always
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.12
+
+
+   elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:5.5.3
+      container_name: elastic
+      hostname: elasticsearch
+      volumes:
+         - ./build/elasticsearch:/usr/share/elasticsearch/data
+      ports:
+         - "9200:9200"
+         - "9300:9300"
+      restart: always
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.13
+
+
+
+   myql:
+      image: mysql:5.7
+      container_name: mysql
+      ports:
+         - "3306:3306"
+      environment:
+         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      volumes:
+         - ./build/mysql:/var/lib/mysql      
+      restart: always
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.14
+
+
+   redis:
+      image: redis:alpine
+      container_name: redis
+      ports:
+         - "6379:6379"
+      volumes:
+         - ./build/redisdata:/data
+      restart: always
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.15
+
+
+   rabbitmq:
+      image: 'bitnami/rabbitmq:3.8'
+      container_name: rabbitmq        
+      ports:
+         - '4369:4369'
+         - '5672:5672'
+         - '25672:25672'
+         - '15672:15672'
+      volumes:
+         - ./build/rabbitmq_data:/bitnami
+      networks:
+         hazhir:
+            ipv4_address: 10.5.0.16
+
+
+networks:
+  hazhir:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/24
+volumes:
+    nginxdata:
+    elasticsearch:
+    redisdata:
+    rabbitmq_data:
