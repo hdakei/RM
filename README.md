@@ -3,7 +3,6 @@
 > Dockerize NGINX with Varnish cache and php-fpm with:
 > Mysql ,Redis, elasticsearch and rabitmq
 
-![Image of Hazhir](https://i.ibb.co/JtmJFq2/image.jpg "RMI")
 
  Dockerfiles :
 - [x] Nginx,Varnish and php-fpm
