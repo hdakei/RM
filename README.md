@@ -1,4 +1,4 @@
-# RMI Project
+# RM Project
 
 > Dockerize NGINX with Varnish cache and php-fpm with:
 > Mysql ,Redis, elasticsearch and rabitmq
